@@ -153,6 +153,7 @@
                     name: '王小虎',
                     address: '上海市普陀区金沙江路 1518 弄'
                 }],
+                bedData:[],
                 dialogFormVisible: false,
                 form: {
                     name: '',
@@ -167,8 +168,15 @@
                 formLabelWidth: '120px'
             };
         },
-        beforeMount() {
+        created() {
+            /*
+            * 跨域请求数据
+            * */
+            this.$http.get("http://localhost:8080/houseBed/select_rentalMode",{},function (res) {
+                this.bedData=res.data;
+                console.log(this.bedData);
 
+            })
         }
     }
 </script>
