@@ -2,55 +2,110 @@
     <div class="login-wrap">
         <div class="ms-login">
             <div class="ms-title">妙妙屋后台管理系统</div>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
+            <el-form label-width="0px" class="ms-content">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username">
+                    <el-input v-model="username" placeholder="username">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
+                    <!--按下enter键自动登录-->
+                    <el-input type="password" placeholder="password" v-model="password" @keyup.enter.native="login()">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                    <el-button type="primary" @click="login()">登录</el-button>
                 </div>
-                <p class="login-tips">Tips : 用户名和密码随便填。</p>
+                <p class="login-tips">Tips : 请填写正确的用户名密码。</p>
             </el-form>
         </div>
     </div>
 </template>
 
 <script>
+
     export default {
         data: function(){
             return {
-                ruleForm: {
-                    username: 'admin',
-                    password: '123123'
-                },
-                rules: {
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
-                    ],
-                    password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
-                    ]
+                username: '',
+                password: ''
+            }
+        },
+        //过滤器
+        filters:{
+
+        },
+        //监听器
+        watch:{
+            username:function (newValue) {
+                if(!newValue){
+                    //为空的操作
+                    this.$message({
+                        message:"用户名不可为空",
+                        type: 'warning'
+                    });
+                }
+            },
+            password:function (newValue) {
+                if(!newValue){
+                    //为空的操作
+                    this.$message({
+                        message:"密码不可为空！",
+                        type: 'warning'
+                    });
                 }
             }
         },
         methods: {
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        localStorage.setItem('ms_username',this.ruleForm.username);
-                        this.$router.push('/');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
+            login:function () {
+                var that=this;
+                if(!this.username){
+                    this.$message({
+                        message:"用户名不可为空！",
+                        type: 'warning'
+                    });
+                    return false;
+                }if(!this.password){
+                    this.$message({
+                        message:"密码不可为空！",
+                        type: 'warning'
+                    });
+                    return false;
+                }if(!this.username && !this.password){
+                    this.$message({
+                        message:"用户名与密码不可为空！",
+                        type: 'warning'
+                    });return false;
+                }
+                //验证账号密码是否正确
+                //axios跨域请求
+                this.axios.get("http://localhost:8080/regsistAdmin/login_regsistAdmin",{
+                    params:{
+                        raPhone:this.username,
+                        raPassword:this.password
                     }
-                });
+                }).then(function (response) {
+                    //console.log(response.data);
+                    if(response.data.code==1){
+                        that.$message({
+                            message:"登录成功！正在跳转。。",
+                            type: 'success'
+                        });
+                        setTimeout(function () {
+                            localStorage.setItem('ms_username',that.username);
+                            that.$router.push('/');
+                        },1000)
+                    }else{
+                        that.$message({
+                            message:"登录失败！请重新登录。。",
+                            type: 'error'
+                        });
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                    console.log("");
+                })
             }
         }
     }
