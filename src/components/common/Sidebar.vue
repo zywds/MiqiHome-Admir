@@ -62,20 +62,39 @@
                             }
                         ]
                     },
+                    /*
+                      * index 跳转我们自己定义的vue 模块
+                      * */
                     {
-                        icon: 'el-icon-lx-apps',
-                        index: '',
+                        icon: 'el-icon-lx-calendar',
+                        index: '3',
                         title: '管理模块',
                         subs: [
                             {
-                                index: 'RentalMode',
-                                title: '出租方式&房屋类型'
+                                index: 'RoomDetails',
+                                title: '房屋详情',
+                                subs: [
+                                    {
+                                        index: 'RentalMode',
+                                        title: '出租方式',
+                                    },
+                                    {
+                                        index: 'RoomType',
+                                        title: '房屋类型',
+                                    },
+                                    {
+                                        index: 'BedType',
+                                        title: '床型'
+                                    }
+                                ]
                             },
+                            {
+                                index: 'FacilityService',
+                                title: '设施服务',
+
+                            }
                         ]
                     },
-                    /*
-                    * index 跳转我们自己定义的vue 模块
-                    * */
                     {
                         icon: 'el-icon-lx-rankfill',
                         index: 'database',
@@ -97,7 +116,7 @@
                         title: '日志记录'
                     },
 
-                   /* {
+                    {
                         icon: 'el-icon-lx-cascades',
                         index: 'table',
                         title: '基础表格'
@@ -107,35 +126,7 @@
                         index: 'tabs',
                         title: 'tab选项卡'
                     },
-                    {
-                        icon: 'el-icon-lx-calendar',
-                        index: '3',
-                        title: '表单相关',
-                        subs: [
-                            {
-                                index: 'form',
-                                title: '基本表单'
-                            },
-                            {
-                                index: '3-2',
-                                title: '三级菜单',
-                                subs: [
-                                    {
-                                        index: 'editor',
-                                        title: '富文本编辑器'
-                                    },
-                                    {
-                                        index: 'markdown',
-                                        title: 'markdown编辑器'
-                                    },
-                                ]
-                            },
-                            {
-                                index: 'upload',
-                                title: '文件上传'
-                            }
-                        ]
-                    },*/
+
                     {
                         icon: 'el-icon-lx-emoji',
                         index: 'icon',

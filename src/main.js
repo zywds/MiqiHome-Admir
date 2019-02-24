@@ -11,6 +11,7 @@ import "babel-polyfill";
 import ajax from 'vue-resource'
 Vue.use(ajax);
 
+
 Vue.config.productionTip = false;
 Vue.use(ElementUI, {
     size: 'small'
