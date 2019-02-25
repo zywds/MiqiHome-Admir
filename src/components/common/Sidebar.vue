@@ -91,7 +91,16 @@
                             {
                                 index: 'FacilityService',
                                 title: '设施服务',
-
+                                subs: [
+                                    {
+                                        index: 'HouseFacilities',
+                                        title: '设施服务类型',
+                                    },
+                                    {
+                                        index: 'HouseFacilitiesDetails',
+                                        title: '设施服务详细',
+                                    }
+                                ]
                             }
                         ]
                     },
