@@ -1,6 +1,7 @@
 <template>
     <div class="RentalMode">
-        <h3 style="font-family: 微软雅黑">出租方式管理</h3>
+      <!--  <h3 style="font-family: 微软雅黑">出租方式管理</h3>-->
+        <marquee style="color: cadetblue">出租方式管理</marquee>
         <el-table
                 :data="bedData"
                 border
@@ -128,12 +129,12 @@
             },
             editSucc(){
 
-                console.log(this.form.rmName)
-                this.$http.put("http://localhost:8080/houseBed/update_rentalMode",{
-
+                console.log(this.form.rmName);
+                this.axios.put("http://localhost:8080/houseBed/update_rentalMode",{
+                    params: {
                         hcName: this.form.rmName,
                         hcId: this.form.rmId
-
+                    }
                 }).then(function (res) {
                    console.log("返回值："+res);
                 });
