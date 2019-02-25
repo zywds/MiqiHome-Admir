@@ -129,6 +129,11 @@ export default new Router({
                     component:resolve=>require(['../components/page/FacilityService.vue'],resolve),
                     meta:{title:'设施服务'}
                 },
+                {
+                    path:'/HouseFacilities',
+                    component:resolve=>require(['../components/page/HouseFacilities.vue'],resolve),
+                    meta:{title:'设施类型'}
+                }
             ]
         },
         {
