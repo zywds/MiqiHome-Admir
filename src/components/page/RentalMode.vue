@@ -70,8 +70,8 @@
                 console.log(this.form.rmName);
                 this.axios.put("http://localhost:8080/houseBed/update_rentalMode",{
                     params: {
-                        rmName: this.form.rmName,
-                        rmId: this.form.rmId
+                        rmName: "ddd",
+                        rmId: 1
                     }
                 }).then(function (res) {
                    console.log("返回值："+res);
