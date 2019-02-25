@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+/*import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/bootstrap/dist/js/bootstrap.min.js';*/
 
 Vue.use(Router);
 
@@ -99,11 +101,34 @@ export default new Router({
                     component:resolve=>require(['../components/page/DatabaseControl.vue'],resolve),
                     meta:{title:'数据库'}
                 },
+                /*
+                * 自定义
+                * */
+                {
+                    path:'/RoomDetails',
+                    component:resolve=>require(['../components/page/RoomDetails.vue'],resolve),
+                    meta:{title:'房态操作'}
+                },
                 {
                     path:'/RentalMode',
                     component:resolve=>require(['../components/page/RentalMode.vue'],resolve),
                     meta:{title:'房态操作'}
-                }
+                },
+                {
+                    path:'/RoomType',
+                    component:resolve=>require(['../components/page/RoomType.vue'],resolve),
+                    meta:{title:'房态操作'}
+                },
+                {
+                    path:'/BedType',
+                    component:resolve=>require(['../components/page/BedType.vue'],resolve),
+                    meta:{title:'房态操作'}
+                },
+                {
+                    path:'/FacilityService',
+                    component:resolve=>require(['../components/page/FacilityService.vue'],resolve),
+                    meta:{title:'设施服务'}
+                },
             ]
         },
         {
