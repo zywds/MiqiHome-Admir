@@ -112,7 +112,6 @@
                     hbtId: this.form.htbId
                 });
                 this.axios.put("http://localhost:8080/houseBed/update_houseBedType?"+readyData).then(function (res) {
-                    console.log(res);
                     if(res.data.code===1){
                         that.$message({
                             message: '成功',

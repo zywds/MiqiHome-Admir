@@ -55,7 +55,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="编号" :label-width="formLabelWidth">
-                    <el-input :disabled="ifDis" v-model="form.hdsId" placeholder="请输入内容"></el-input>
+                    <el-input :disabled="true" v-model="form.hdsId" placeholder="请输入内容"></el-input>
                 </el-form-item>
                 <el-form-item label="尺寸" :label-width="formLabelWidth">
                     <el-input v-model="form.hbsSize" autocomplete="" placeholder="请输入内容"></el-input>
@@ -86,6 +86,30 @@
     export default {
         name: "BedParams",
         methods: {
+            test(){
+                var that=this;
+                let regsistadminList = [];
+                regsistadminList.push("");
+                regsistadminList.push("");
+                regsistadminList.push("");
+                regsistadminList.push("");
+                regsistadminList.push("");
+                regsistadminList.push(0);
+                regsistadminList.push(10);
+
+                //axios请求
+              /*  this.axios({
+                    method:"post",
+                    url:"http://localhost:8080/regsistAdmin/select_regsistAdmin",
+                    data:regsistadminList
+                }).then((res)=>{
+                    console.log(res.data)
+                });*/
+                this.axios.post("http://localhost:8080/regsistAdmin/select_regsistAdmin",regsistadminList).then((res)=>{
+                    console.log(res.data);
+                })
+            }
+            ,
             changeVal(){
                 console.log(this.checkVal)
             },
@@ -102,7 +126,7 @@
                 console.log(row);
                 this.form.hdsId=row.hdsId;
                 this.form.hbsSize=row.hbsSize;
-                this.checkVal=row.housebedtype.hbtName;
+                //this.checkVal=row.housebedtype.hbtName;
             },
             /*
             * 封装查询
@@ -124,6 +148,32 @@
             * */
             editSucc(){
                 var that = this;
+                if(that.form.hbsSize===""||that.checkVal===""){
+                    that.$message({
+                        message: '空值错误',
+                        type: 'warning'
+                    });
+                    return false;
+                }
+
+
+                var readyData= qs.stringify({
+                    hbtId:that.checkVal,
+                    hbsSize:that.form.hbsSize,
+                    hdsId:that.form.hdsId
+                });
+                console.log(readyData);
+
+                this.axios.put("http://localhost:8080/houseBed/update_houseBedSize?"+readyData).then((res)=>{
+                     if(res.data.code===1){
+                         that.$message({
+                             message: '成功',
+                             type: 'success'
+                         });
+                         that.norMalSelect();
+                     }
+                 });
+
                 this.dialogFormVisible=false;
             },
 
@@ -132,16 +182,36 @@
             * */
             addOne(){
                 var that = this;
-                /*
-                * 禁掉编号框
-                * */
-                that.ifDis=true;
-                console.log(that.checkVal);
-                console.log(that.form.hdsId);
-                console.log(that.form.hbsSize);
-
+                if(that.form.hbsSize===""||that.checkVal===""){
+                    that.$message({
+                        message: '空值错误',
+                        type: 'warning'
+                    });
+                    return false;
+                }
+                this.axios.post("http://localhost:8080/houseBed/insert_houseBedSize",qs.stringify({
+                    hbtId:that.checkVal,
+                    hbsSize:that.form.hbsSize
+                })).then((res)=>{
+                   if(res.data.code>0){
+                       that.$message({
+                           message: '成功',
+                           type: 'success'
+                       });
+                       that.axios.get("http://localhost:8080/houseBed/select_houseBedSize_count",{}).then((res)=>{
+                           that.allCount=res.data;
+                       });
+                       //查询参数数据
+                       that.norMalSelect();
+                   }else {
+                       that.$message({
+                           message: '失败',
+                           type: 'warning'
+                       });
+                   }
+                });
                 this.dialogFormVisible=false;
-            }
+            },
         },
         data() {
             return {
@@ -161,13 +231,16 @@
 
                 options: [],
                 checkVal:"",
-                ifDis:false
             };
         },
+
+        /*
+        * 创建初 查询
+        * */
         created() {
             var that=this;
             //查询参数总数
-            this.axios.get("http://localhost:8080/houseBed/select_houseBedSize_count",{}).then((res)=>{
+            this.$http.get("http://localhost:8080/houseBed/select_houseBedSize_count",{}).then((res)=>{
                 that.allCount=res.data;
             });
 
@@ -179,19 +252,12 @@
                 }
             }).then((res)=>{
                 that.options=res.data.data;
-                console.log(that.options)
             });
 
             //查询参数数据
-            this.axios.get("http://localhost:8080/houseBed/select_houseBedSize",{
-                params:{
-                    no:that.currentPage1,
-                    pagesize:that.currentPageSize
-                }
-            }).then((res)=>{
-                console.log(res.data.data);
-                that.bedParamsData=res.data.data;
-            })
+           this.norMalSelect();
+
+           this.test();
         }
     }
 </script>

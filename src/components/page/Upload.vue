@@ -15,7 +15,7 @@
             <el-upload
                 class="upload-demo"
                 drag
-                action="/api/posts/"
+                action="http://localhost:8080/pictureController/fileUpload"
                 multiple>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -32,7 +32,7 @@
                     <input class="crop-input" type="file" name="image" accept="image/*" @change="setImage"/>
                 </div>
             </div>
-        
+
             <el-dialog title="裁剪图片" :visible.sync="dialogVisible" width="30%">
                 <vue-cropper ref='cropper' :src="imgSrc" :ready="cropImage" :zoom="cropImage" :cropmove="cropImage" style="width:100%;height:300px;"></vue-cropper>
                 <span slot="footer" class="dialog-footer">
@@ -105,7 +105,7 @@
         font-size: 22px;
         color: #1f2f3d;
     }
-    .pre-img{   
+    .pre-img{
         width: 100px;
         height: 100px;
         background: #f8f8f8;
