@@ -80,11 +80,15 @@
                                     },
                                     {
                                         index: 'RoomType',
-                                        title: '房屋类型',
+                                        title: '民宿类型',
                                     },
                                     {
                                         index: 'BedType',
                                         title: '床型'
+                                    },
+                                    {
+                                        index: 'BedParams',
+                                        title: '床型参数'
                                     }
                                 ]
                             },

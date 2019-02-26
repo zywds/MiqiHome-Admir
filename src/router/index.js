@@ -133,6 +133,11 @@ export default new Router({
                     path:'/HouseFacilities',
                     component:resolve=>require(['../components/page/HouseFacilities.vue'],resolve),
                     meta:{title:'设施类型'}
+                },
+                {
+                    path:'/BedParams',
+                    component:resolve=>require(['../components/page/BedParams.vue'],resolve),
+                    meta:{title:'设施类型'}
                 }
             ]
         },
