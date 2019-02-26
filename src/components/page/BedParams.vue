@@ -98,18 +98,10 @@
                 regsistadminList.push(10);
 
                 //axios请求
-              /*  this.axios({
-                    method:"post",
-                    url:"http://localhost:8080/regsistAdmin/select_regsistAdmin",
-                    data:regsistadminList
-                }).then((res)=>{
-                    console.log(res.data)
-                });*/
                 this.axios.post("http://localhost:8080/regsistAdmin/select_regsistAdmin",regsistadminList).then((res)=>{
                     console.log(res.data);
                 })
-            }
-            ,
+            },
             changeVal(){
                 console.log(this.checkVal)
             },
@@ -173,7 +165,6 @@
                          that.norMalSelect();
                      }
                  });
-
                 this.dialogFormVisible=false;
             },
 
