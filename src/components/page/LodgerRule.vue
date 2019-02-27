@@ -1,20 +1,20 @@
 <template>
-    <div class="BedType">
-        <marquee style="color: cadetblue">床型管理</marquee>
+    <div class="LodgerRule">
+        <marquee style="color: cadetblue">房客要求管理</marquee>
         <el-table
-                :data="BedTypeData"
+                :data="LodgerRuleData"
                 style="width: 100%"
                 :default-sort = "{prop: 'date', order: 'descending'}"
         >
             <el-table-column
-                    prop="hbtId"
+                    prop="hreId"
                     label="编号"
                     sortable
                     width="550">
             </el-table-column>
             <el-table-column
-                    prop="hbtName"
-                    label="类型"
+                    prop="hreName"
+                    label="权限"
                     sortable
                     width="550">
             </el-table-column>
@@ -31,19 +31,19 @@
         <!--
             新增
         -->
-        <el-button type="primary" @click="dialogFormVisible = true">新增类型</el-button>
+        <el-button type="primary" @click="dialogFormVisible = true">新增数据</el-button>
         <!--
             弹出层
         -->
         <el-dialog title="信息操作" :visible.sync="dialogFormVisible">
             <el-form >
                 <el-form-item label="编号" :label-width="formLabelWidth">
-                    <!-- <el-input  v-model="this.rmId" autocomplete="off"></el-input>-->
-                    <el-input id="TypeNo" v-model="form.htbId" placeholder="请输入内容"></el-input>
+                    <el-input :disabled="true" v-model="form.hreId" placeholder="请输入内容"></el-input>
                 </el-form-item>
-                <el-form-item label="类型" :label-width="formLabelWidth">
-                    <el-input id="TypeVal" v-model="form.htbName" autocomplete="" placeholder="请输入内容"></el-input>
+                <el-form-item label="权限" :label-width="formLabelWidth">
+                    <el-input v-model="form.hreName" autocomplete="" placeholder="请输入内容"></el-input>
                 </el-form-item>
+
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -58,7 +58,7 @@
                 :page-sizes="[3,5,10]"
                 :page-size="5"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="countPageData">
+                :total="allCount">
         </el-pagination>
     </div>
 </template>
@@ -66,8 +66,11 @@
 <script>
     import  qs from 'qs'
     export default {
-        name: "BedType",
+        name: "LodgerRule",
         methods: {
+            changeVal(){
+                console.log(this.checkVal)
+            },
             handleSizeChange(val) {
                 this.currentPageSize=val;
                 this.norMalSelect();
@@ -75,44 +78,43 @@
             handleCurrentChange(val) {
                 this.currentPage1=val;
                 this.norMalSelect();
-
+            },
+            editFirstRows(row){
+                this.dialogFormVisible=true;
+                console.log(row);
+                this.form.hreId=row.hreId;
+                this.form.hreName=row.hreName;
             },
             /*
             * 封装查询
             * */
             norMalSelect(){
                 var that=this;
-                this.axios.get("http://localhost:8080/houseBed/select_houseBedType",{
-                    params:{
+                this.axios.post("http://localhost:8080/HomeRequirement/select_Homerequirement_byLimit",qs.stringify({
                         no:that.currentPage1,
                         pagesize:that.currentPageSize
-                    }
-                }).then(function (res) {
-                    that.BedTypeData=res.data.data;
+                })).then(function (res) {
+                    that.LodgerRuleData=res.data;
                 })
             },
 
-            handleClick(row) {
-                console.log(row);
-            },
-
-            editFirstRows(row){
-                this.dialogFormVisible=true;
-                this.form.htbId=row.hbtId;
-                this.form.htbName=row.hbtName;
-            },
-
             /*
-            * 编辑 put 请求
+            * 编辑 post 请求
             * */
             editSucc(){
                 var that = this;
-                var readyData= qs.stringify({
-                    hbtName: this.form.htbName,
-                    hbtId: this.form.htbId
-                });
-                this.axios.put("http://localhost:8080/houseBed/update_houseBedType?"+readyData).then(function (res) {
-                    if(res.data.code===1){
+                if(that.form.hreName===""){
+                    that.$message({
+                        message: '空值错误',
+                        type: 'warning'
+                    });
+                    return false;
+                }
+                this.axios.post("http://localhost:8080/HomeRequirement/update_Homerequirement",{
+                    hreId:that.form.hreId,
+                    hreName:that.form.hreName
+                }).then((res)=>{
+                    if(res.data>0){
                         that.$message({
                             message: '成功',
                             type: 'success'
@@ -128,59 +130,64 @@
             * */
             addOne(){
                 var that = this;
-                if(this.form.htbame===""){
-                    this.$message({
+                if(that.form.hreName===""){
+                    that.$message({
                         message: '空值错误',
                         type: 'warning'
                     });
                     return false;
                 }
-                console.log(this.form.htbName);
-                this.axios.post("http://localhost:8080/houseBed/insert_houseBedType",qs.stringify({
-                    hbtName: this.form.htbName
-                })).then(function (res) {
-                    console.log(res.data.code);
-                    if(res.data.code==1){
+
+                //console.log(that.form.hreName)
+                this.axios.post("http://localhost:8080/HomeRequirement/insert_Homerequirement",{
+                    hreName:that.form.hreName
+                }).then((res)=>{
+                    if(res.data>0){
                         that.$message({
                             message: '成功',
                             type: 'success'
                         });
-                        //查询总数
-                        that.axios.get("http://localhost:8080/houseBed/select_houseBedTypeCount",
-                        ).then(function (res) {
-                            that.countPageData=res.data;
+                        that.axios.get("http://localhost:8080/HomeRequirement/select_Homerequirement_count",{}).then((res)=>{
+                            that.allCount=res.data;
                         });
+                        //查询参数数据
                         that.norMalSelect();
+                    }else {
+                        that.$message({
+                            message: '失败',
+                            type: 'warning'
+                        });
                     }
                 });
                 this.dialogFormVisible=false;
-
-            }
+            },
         },
         data() {
             return {
-                //分页
+                allCount:0,
                 currentPage1: 1,
                 currentPageSize:5,
-                countPageData:0,
-                BedTypeData:[],
+
+                LodgerRuleData:[],
                 dialogFormVisible: false,
                 form: {
-                    htbId:"",
-                    htbName:""
+                    hreId:"",
+                    hreName:""
                 },
-                formLabelWidth: '120px'
+                formLabelWidth: '120px',
             };
         },
-        beforeMount() {
-            var that=this;
 
-            //查询总数
-            this.axios.get("http://localhost:8080/houseBed/select_houseBedTypeCount",
-            ).then(function (res) {
-                that.countPageData=res.data;
+        /*
+        * 创建初 查询
+        * */
+        created() {
+            var that=this;
+            //查询参数总数
+            this.axios.get("http://localhost:8080/HomeRequirement/select_Homerequirement_count",{}).then((res)=>{
+                that.allCount=res.data;
             });
-            //默认加载
+            //查询参数数据
             this.norMalSelect();
         }
     }

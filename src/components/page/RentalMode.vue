@@ -11,13 +11,13 @@
                     prop="rmId"
                     label="编号"
                     sortable
-                    width="350">
+                    width="550">
             </el-table-column>
             <el-table-column
                     prop="rmName"
                     label="类型"
                     sortable
-                    width="350">
+                    width="550">
             </el-table-column>
             <el-table-column
                     fixed="right"
