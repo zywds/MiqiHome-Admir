@@ -86,22 +86,6 @@
     export default {
         name: "BedParams",
         methods: {
-            test(){
-                var that=this;
-                let regsistadminList = [];
-                regsistadminList.push("");
-                regsistadminList.push("");
-                regsistadminList.push("");
-                regsistadminList.push("");
-                regsistadminList.push("");
-                regsistadminList.push(0);
-                regsistadminList.push(10);
-
-                //axios请求
-                this.axios.post("http://localhost:8080/regsistAdmin/select_regsistAdmin",regsistadminList).then((res)=>{
-                    console.log(res.data);
-                })
-            },
             changeVal(){
                 console.log(this.checkVal)
             },
@@ -248,7 +232,6 @@
             //查询参数数据
            this.norMalSelect();
 
-           this.test();
         }
     }
 </script>
