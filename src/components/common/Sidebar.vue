@@ -140,8 +140,8 @@
                     },
                     {
                         icon: 'el-icon-lx-copy',
-                        index: 'tabs',
-                        title: 'tab选项卡'
+                        index: 'RegsistAdmin',
+                        title: '管理员管理'
                     },
 
                     {
