@@ -35,9 +35,9 @@ export default new Router({
                 },
 
                 {
-                    path: '/tabs',
-                    component: resolve => require(['../components/page/Tabs.vue'], resolve),
-                    meta: { title: 'tab选项卡' }
+                    path: '/RegsistAdmin',
+                    component: resolve => require(['../components/page/RegsistAdmin.vue'], resolve),
+                    meta: { title: '管理员管理' }
                 },
                 {
                     path: '/form',
@@ -132,12 +132,17 @@ export default new Router({
                 {
                     path:'/HouseFacilities',
                     component:resolve=>require(['../components/page/HouseFacilities.vue'],resolve),
-                    meta:{title:'设施类型'}
+                    meta:{title:'设施服务类型'}
+                },
+                {
+                    path:'/HouseFacilitiesDetails',
+                    component:resolve=>require(['../components/page/HouseFacilitiesDetails.vue'],resolve),
+                    meta:{title:'设施服务详细'}
                 },
                 {
                     path:'/BedParams',
                     component:resolve=>require(['../components/page/BedParams.vue'],resolve),
-                    meta:{title:'设施类型'}
+                    meta:{title:'床型参数'}
                 },
                 {
                     path:'/LodgerRule',
