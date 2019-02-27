@@ -132,6 +132,7 @@
                     return false;
                 }
 
+                console.log(that.form.hbsSize)
 
                 var readyData= qs.stringify({
                     hbtId:that.checkVal,
