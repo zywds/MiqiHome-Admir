@@ -138,6 +138,11 @@ export default new Router({
                     path:'/BedParams',
                     component:resolve=>require(['../components/page/BedParams.vue'],resolve),
                     meta:{title:'设施类型'}
+                },
+                {
+                    path:'/LodgerRule',
+                    component:resolve=>require(['../components/page/LodgerRule.vue'],resolve),
+                    meta:{title:'房客要求'}
                 }
             ]
         },

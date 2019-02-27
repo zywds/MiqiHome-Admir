@@ -89,6 +89,10 @@
                                     {
                                         index: 'BedParams',
                                         title: '床型参数'
+                                    },
+                                    {
+                                        index: 'LodgerRule',
+                                        title: '房客要求'
                                     }
                                 ]
                             },
