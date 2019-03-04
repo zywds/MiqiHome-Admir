@@ -148,6 +148,11 @@ export default new Router({
                     path:'/LodgerRule',
                     component:resolve=>require(['../components/page/LodgerRule.vue'],resolve),
                     meta:{title:'房客要求'}
+                },
+                {
+                    path:'/Logger',
+                    component:resolve=>require(['../components/page/Logger.vue'],resolve),
+                    meta:{title:'日志记录'}
                 }
             ]
         },
