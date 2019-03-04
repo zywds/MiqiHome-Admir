@@ -129,15 +129,15 @@
                     },
                     {
                         icon: 'el-icon-edit',
-                        index: '4',
+                        index: 'Logger',
                         title: '日志记录'
                     },
 
-                    {
+                   /* {
                         icon: 'el-icon-lx-cascades',
                         index: 'table',
                         title: '基础表格'
-                    },
+                    },*/
                     {
                         icon: 'el-icon-lx-copy',
                         index: 'RegsistAdmin',
